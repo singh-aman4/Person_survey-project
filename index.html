@@ -79,6 +79,11 @@
       border: none;
       font-size: large;
       color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    #fetchData:hover {
+      background-color: rgb(161, 19, 19);
     }
 
     #output {
@@ -94,6 +99,15 @@
       background-color: #ffffff;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       box-sizing: border-box;
+    }
+    .record-item {
+    background-color: #e0f2fe; /* light blue */
+    display: flex;
+    gap: 20px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    font-family: sans-serif;
     }
 
 
@@ -119,6 +133,8 @@
       <input type="text" id="age" placeholder="Enter your age">
       <input type="text" id="work" placeholder="Enter your work">
       <input type="text" id="salary" placeholder="Enter your salary">
+      <input type="text" id="status" placeholder="What were doing? (...ing)">
+      
       <input id="done" type="submit" value="Submit">
       <br>
       <hr>
@@ -142,10 +158,12 @@
         name: document.querySelector("#name").value,
         age: document.querySelector("#age").value,
         work: document.querySelector("#work").value,
-        salary: parseInt(document.querySelector("#salary").value)
+        salary: parseInt(document.querySelector("#salary").value),
+        status: document.querySelector("#status").value
+
       };
 
-      const response = await fetch("https://rendering-node.onrender.com/person/", {
+      const response = await fetch("http://localhost:3000/person/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -156,7 +174,7 @@
     });
 
     function activateShow(){
-            fetch("https://rendering-node.onrender.com/person/")
+            fetch("http://localhost:3000/person/")
             .then(res=>res.json())
             .then(res =>{
 
@@ -166,11 +184,26 @@
                 // list.appendChild(item);
                 // alert(typeof res.Adata[0]);
 
-                for(let el of res.Adata){
-                    const item=document.createElement("li");
-                    item.textContent=`name - ${el.name} age- ${el.age}  work-${el.work}  sal-${el.salary}`;
-                    list.appendChild(item);
-                }
+                for (let el of res.Adata) {
+    const item = document.createElement("li");
+
+    // Create a single div for all info
+    const recordDiv = document.createElement("div");
+    recordDiv.textContent = `${el.name} at the age ${el.age} Working as ${el.work} earns ₹${el.salary} :)`;
+
+    // Apply simple styling
+    recordDiv.style.backgroundColor = "#e0f2fe"; // light blue
+    recordDiv.style.padding = "10px";
+    recordDiv.style.marginBottom = "10px";
+    recordDiv.style.borderRadius = "6px";
+    recordDiv.style.fontFamily = "sans-serif";
+
+    // Add the div to the list item
+    item.appendChild(recordDiv);
+
+    // Add the list item to the list
+    list.appendChild(item);
+}
             })
             .catch(res=>{
                 document.querySelector("#box").textContent="Something went wrong";
