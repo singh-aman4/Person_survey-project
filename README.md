@@ -16,3 +16,6 @@ Key Features:
  <br>
 
 This project demonstrates the integration of frontend and backend technologies to implement basic CRUD operations in a lightweight and functional web environment.
+
+<img width="1440" alt="Screenshot 2025-06-23 at 23 43 22" src="https://github.com/user-attachments/assets/6ef3af37-bf96-488f-878a-9598bfa16da6" />
+
